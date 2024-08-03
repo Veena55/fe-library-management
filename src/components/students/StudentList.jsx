@@ -1,13 +1,14 @@
 import React from 'react'
 import { BiEdit, BiSolidEdit, BiSort } from 'react-icons/bi'
 import { BsPlusLg, BsTrash2Fill } from 'react-icons/bs'
+import { Link } from 'react-router-dom'
 
 const StudentList = () => {
     return (
         <>
             <div className='p-3 flex justify-between items-center'>
                 <h3 className='font-bold text-xl'>All Students</h3>
-                <button className='bg-[#5058b2] text-white py-2 px-3 shadow-md rounded-md flex gap-2 items-center'><BsPlusLg size={20} />New Student</button>
+                <Link to='/student/add' className='bg-[#5058b2] text-white py-2 px-3 shadow-md rounded-md flex gap-2 items-center'><BsPlusLg size={20} />New Student</Link>
             </div>
             <div className='clear-end'></div>
             <hr className='mb-3 border-t-[#bababa]' />
