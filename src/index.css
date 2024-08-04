@@ -4,9 +4,41 @@
 
 * {
     margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 body {
     background-color: #F9F9F9;
+    overflow: hidden;
+}
+
+@keyframes rotate_spinner {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.rotate {
+    animation: rotate_spinner 1s linear infinite;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background-color: #6e78e1;
+    border-radius: 10px;
+    border: 3px solid #ffffff;
+}
+
+
+::-webkit-scrollbar-track {
+    background: #c5dcff4e;
 }

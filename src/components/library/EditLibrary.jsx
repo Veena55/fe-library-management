@@ -1,30 +1,36 @@
 import { CalendarDateRangeIcon } from '@heroicons/react/24/solid';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BiLoaderCircle } from 'react-icons/bi';
 import { useMutation, useQuery } from 'react-query';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const AddLibraryRecord = () => {
+const EditLibrary = () => {
     const navigate = useNavigate();
+    const { id } = useParams();
     const [data, setData] = useState({
         studentId: "",
         bookId: "",
         startdate: "",
-        enddate: ""  // Corrected to enddate for consistency
+        enddate: ""
     });
 
     const handleChangeData = (e) => {
         const { name, value } = e.target;
         if (name === 'bookId') {
-            const obj = JSON.parse(value);
-            if (obj.quantity === 0) {
-                console.log("Not Allowed!!");
-                toast.error("This book is not available!!");
+            try {
+                const obj = JSON.parse(value);
+                if (obj.quantity === 0) {
+                    console.log("Not Allowed!!");
+                    toast.error("This book is not available!!");
+                    return;
+                }
+            } catch (error) {
+                console.error("Error parsing JSON:", error);
+                toast.error("Invalid book data");
                 return;
             }
-
         }
         setData((prevData) => ({ ...prevData, [name]: value }));
     };
@@ -39,12 +45,33 @@ const AddLibraryRecord = () => {
         return response.data;
     };
 
+    const fetchRecordById = async () => {
+        const response = await axios.get(`http://localhost:5000/library/edit/${id}`);
+        return response.data;
+    };
+
+    const { data: library, isLoading: isLibraryLoading, isError: isLibraryError, error: libraryError } = useQuery({
+        queryKey: ['library_record', id],
+        queryFn: fetchRecordById,
+        onSuccess: (data) => {
+            setData({
+                studentId: data.studentId || "",
+                bookId: data.bookId || "",
+                startdate: new Date(data.startdate).toISOString().split('T')[0] || "",
+                enddate: new Date(data.enddate).toISOString().split('T')[0] || "",
+                returndate: new Date(data.returndate).toISOString().split('T')[0] || "",
+            });
+        },
+        onError: (err) => {
+            console.error('Library Record Query Error:', err);
+            toast.error("Unable to fetch Library Record");
+        }
+    });
+    console.log(library, data);
+
     const { data: students, isLoading: isStudentLoading, isError: isStudentError, error: studentError } = useQuery({
         queryKey: ['all_students_list'],
         queryFn: fetchAllStudents,
-        onSuccess: (data) => {
-            console.log('Students Data:', data);
-        },
         onError: (err) => {
             console.error('Students Query Error:', err);
             toast.error("Unable to fetch Students Data");
@@ -54,9 +81,6 @@ const AddLibraryRecord = () => {
     const { data: books, isLoading: isBookLoading, isError: isBookError, error: bookError } = useQuery({
         queryKey: ['all_books_list'],
         queryFn: fetchAllBooks,
-        onSuccess: (data) => {
-            console.log('Books Data:', data);
-        },
         onError: (err) => {
             console.error('Books Query Error:', err);
             toast.error("Unable to fetch Books Data");
@@ -64,9 +88,9 @@ const AddLibraryRecord = () => {
     });
 
     const mutation = useMutation((formData) =>
-        axios.post('http://localhost:5000/library/add', formData), {
+        axios.put(`http://localhost:5000/library/edit_data/${id}`, formData), {
         onSuccess: () => {
-            toast.success("New Record Added!!");
+            toast.success("Record Edited!!");
             navigate("/library/all");
         },
         onError: (error) => {
@@ -78,6 +102,14 @@ const AddLibraryRecord = () => {
         e.preventDefault();
         mutation.mutate(data);
     };
+
+    if (isLibraryLoading || isStudentLoading || isBookLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (isLibraryError) {
+        return <div>Error: {libraryError.message}</div>;
+    }
 
     if (isStudentError) {
         return <div>Error: {studentError.message}</div>;
@@ -91,7 +123,7 @@ const AddLibraryRecord = () => {
         <form className='mx-auto my-10' onSubmit={handleSubmit}>
             <div className="bg-white p-5">
                 <div className="border-b border-gray-900/10 px-5 pb-10">
-                    <h2 className="text-base font-semibold leading-7 text-indigo-500">Add New Record</h2>
+                    <h2 className="text-base font-semibold leading-7 text-indigo-500">Edit Record</h2>
                     <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-6">
                         <div className="col-span-full">
                             <div className="sm:col-span-4">
@@ -104,18 +136,14 @@ const AddLibraryRecord = () => {
                                             onChange={handleChangeData}
                                             name="studentId"
                                             className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                            defaultValue=""
+                                            value={data.studentId}
                                         >
                                             <option value="" disabled>-- Select --</option>
-                                            {isStudentLoading ? (
-                                                <option>Loading Students...</option>
-                                            ) : (
-                                                students.map((element) => (
-                                                    <option key={element.id} value={element.id}>
-                                                        {element.name}
-                                                    </option>
-                                                ))
-                                            )}
+                                            {students.map((element) => (
+                                                <option key={element.id} value={element.id}>
+                                                    {element.name}
+                                                </option>
+                                            ))}
                                         </select>
                                     </div>
                                 </div>
@@ -133,18 +161,14 @@ const AddLibraryRecord = () => {
                                             onChange={handleChangeData}
                                             name="bookId"
                                             className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                            defaultValue=""
+                                            value={data.bookId}
                                         >
                                             <option value="" disabled>-- Select --</option>
-                                            {isBookLoading ? (
-                                                <option>Loading Books...</option>
-                                            ) : (
-                                                books.map((element) => (
-                                                    <option key={element.id} value={JSON.stringify({ id: element.id, quantity: element.quantity })}>
-                                                        {element.name} - {element.quantity ? `(${element.quantity})` : "Not Available"}
-                                                    </option>
-                                                ))
-                                            )}
+                                            {books.map((element) => (
+                                                <option key={element.id} value={JSON.stringify({ id: element.id, quantity: element.quantity })}>
+                                                    {element.name} - {element.quantity ? `(${element.quantity})` : "Not Available"}
+                                                </option>
+                                            ))}
                                         </select>
                                     </div>
                                 </div>
@@ -182,6 +206,21 @@ const AddLibraryRecord = () => {
                                 />
                             </div>
                         </div>
+                        <div className="col-span-full">
+                            <label className="block text-sm font-medium leading-6 text-gray-900">
+                                Return Date
+                            </label>
+                            <div className="mt-2 flex items-center gap-x-3">
+                                <CalendarDateRangeIcon aria-hidden="true" className="h-12 w-12 text-gray-300" />
+                                <input
+                                    type="date"
+                                    name='returndate'
+                                    className='border p-1 rounded-md'
+                                    onChange={handleChangeData}
+                                    value={data.returndate}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="mt-6 flex items-center justify-end gap-x-6">
@@ -192,7 +231,7 @@ const AddLibraryRecord = () => {
                         type="submit"
                         className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
-                        Save {mutation.isLoading && <span><BiLoaderCircle /></span>}
+                        Edit {mutation.isLoading && <span><BiLoaderCircle /></span>}
                     </button>
                 </div>
             </div>
@@ -200,4 +239,4 @@ const AddLibraryRecord = () => {
     );
 }
 
-export default AddLibraryRecord;
+export default EditLibrary;
