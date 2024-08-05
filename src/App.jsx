@@ -24,6 +24,7 @@ function AppRoutes() {
       <div className={`w-full ${showSideBar ? 'md:w-7/10 p-2' : 'w-full'} mx-auto`}>
         <Routes>
           <Route path="/" element={<Home />} />
+          {/* <Route path="*" element={<StudentList />} /> */}
           <Route path="/student/all" element={<StudentList />} />
           <Route path="/student/add" element={<AddStudent />} />
           <Route path="/student/edit/:id" element={<EditStudent />} />

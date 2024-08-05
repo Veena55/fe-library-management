@@ -17,15 +17,14 @@ const AddLibraryRecord = () => {
 
     const handleChangeData = (e) => {
         const { name, value } = e.target;
-        if (name === 'bookId') {
-            const obj = JSON.parse(value);
-            if (obj.quantity === 0) {
-                console.log("Not Allowed!!");
-                toast.error("This book is not available!!");
-                return;
-            }
+        // if (name === 'bookId') {
+        //     const obj = JSON.parse(value);
+        //     if (obj.quantity === 0) {
+        //         toast.error("This book is not available!!");
+        //         return;
+        //     }
 
-        }
+        // }
         setData((prevData) => ({ ...prevData, [name]: value }));
     };
 
@@ -140,7 +139,8 @@ const AddLibraryRecord = () => {
                                                 <option>Loading Books...</option>
                                             ) : (
                                                 books.map((element) => (
-                                                    <option key={element.id} value={JSON.stringify({ id: element.id, quantity: element.quantity })}>
+                                                    // <option key={element.id} disabled={element.quantity === 0} value={JSON.stringify({ id: element.id, quantity: element.quantity })}>
+                                                    <option key={element.id} disabled={element.quantity === 0} value={element.id}>
                                                         {element.name} - {element.quantity ? `(${element.quantity})` : "Not Available"}
                                                     </option>
                                                 ))

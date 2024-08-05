@@ -129,7 +129,7 @@ const EditStudent = () => {
                             </p>
                             <div className="mt-2 flex items-center gap-x-3">
                                 {data.photo || student && student.photo ? <img src={"http://localhost:5000/" + student.photo} width={100} /> : <UserCircleIcon aria-hidden="true" className="h-12 w-12 text-gray-300" />}
-                                <input type="file" hidden id="photo" name="photo" onChange={handleChangeData} />
+                                <input type="file" accept='image/*' hidden id="photo" name="photo" onChange={handleChangeData} />
                                 <label
                                     htmlFor="photo"
                                     className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -150,7 +150,7 @@ const EditStudent = () => {
                                     <source src={"http://localhost:5000/" + student.video} type="video/mp4"></source>
                                 </video> : <VideoCameraIcon aria-hidden="true" className="h-12 w-12 text-gray-300" />}
 
-                                <input type="file" hidden id="video" name="video" onChange={handleChangeData} />
+                                <input type="file" accept='video/*' hidden id="video" name="video" onChange={handleChangeData} />
                                 <label htmlFor="video"
                                     className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                 >

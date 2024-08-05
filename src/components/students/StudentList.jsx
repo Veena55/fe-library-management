@@ -71,7 +71,7 @@ const StudentList = () => {
                     </div>
 
                     <div>
-                        <h5 className="font-semibold flex items-center gap-1">Name <span><BiSort className='text-gray-500' onClick={sortRecords} /></span></h5>
+                        <h5 className="font-semibold flex items-center gap-1">Name <span><BiSort className='text-gray-500 cursor-pointer' onClick={sortRecords} /></span></h5>
                     </div>
 
                     <div>
@@ -95,29 +95,29 @@ const StudentList = () => {
                 {isLoading ? <div className='flex justify-center py-5 text-indigo-600'><BiLoaderCircle className='rotate' size={30} /> </div> : !students ? <p className='text-center text-red-500 py-5'>No Records Found</p> :
                     students.map((element, index) => {
                         return (
-                            <div className='grid grid-cols-6 p-5' key={index}>
+                            <div className='grid grid-cols-6 hover:bg-gray-100 p-5' key={index}>
                                 <div>
                                     <h5>{index + 1}</h5>
                                 </div>
                                 <div>
-                                    <h5>{element.name}</h5>
+                                    <h5 className='capitalize'>{element.name}</h5>
                                 </div>
                                 <div>
                                     <h5>{element.class}</h5>
                                 </div>
                                 <div>
-                                    {element.photo ? <img src={`http://localhost:5000/${element.photo}`} width={50} /> : "Not Uploaded"}
+                                    {element.photo ? <img src={`http://localhost:5000/${element.photo}`} width={50} /> : <p className='text-indigo-500'>Not Uploaded</p>}
                                 </div>
                                 <div>
                                     {element.video ? <video width="150" height="150" controls>
                                         <source src={`http://localhost:5000/${element.video}`} type="video/mp4"></source>
-                                    </video> : "Not Uploaded"}
+                                    </video> : <p className='text-indigo-500'>Not Uploaded</p>}
 
                                 </div>
 
-                                <div className='flex gap-3'>
-                                    <Link to={`/student/edit/${element.id}`} className='flex items-center px-3 py-2 bg-green-50 text-green-800 rounded-lg'><BiSolidEdit /></Link>
-                                    <button className='flex items-center px-3 py-2 bg-red-50 text-red-500  rounded-lg' onClick={() => handleDelete(element.id)}><BsTrash2Fill /></button>
+                                <div className='flex gap-3 items-center'>
+                                    <Link to={`/student/edit/${element.id}`} className='px-3 py-2 bg-green-50 text-green-800 rounded-lg'><BiSolidEdit /></Link>
+                                    <button className='px-3 py-2 bg-red-50 text-red-500  rounded-lg' onClick={() => handleDelete(element.id)}><BsTrash2Fill /></button>
                                 </div>
                             </div>
                         )

@@ -69,7 +69,7 @@ const BookList = () => {
             <div className='clear-end'></div>
             <hr className='mb-3 border-t-[#bababa]' />
             <div className="bg-white rounded-xl shadow-md max-h-screen overflow-auto">
-                <div className='grid grid-cols-6 p-5'>
+                <div className='grid grid-cols-7 p-5'>
                     <div>
                         <h5 className="font-semibold">Sr.No.</h5>
                     </div>
@@ -81,6 +81,9 @@ const BookList = () => {
                     </div>
                     <div>
                         <h5 className="font-semibold">Publications</h5>
+                    </div>
+                    <div>
+                        <h5 className="font-semibold">Quantity</h5>
                     </div>
                     <div>
                         <h5 className="font-semibold">Year</h5>
@@ -98,12 +101,12 @@ const BookList = () => {
                     : !books ?
                         <p className='text-center text-red-500 py-5'>No Records Found</p>
                         : books.map((element, index) => (
-                            <div className='grid grid-cols-6 p-5' key={index}>
+                            <div className='grid grid-cols-7 hover:bg-gray-100 p-5' key={index}>
                                 <div>
                                     <h5>{index + 1}</h5>
                                 </div>
                                 <div>
-                                    <h5>{element.name}</h5>
+                                    <h5 className='capitalize'>{element.name}</h5>
                                 </div>
                                 <div>
                                     <h5>{element.author}</h5>
@@ -112,13 +115,16 @@ const BookList = () => {
                                     <h5>{element.publications}</h5>
                                 </div>
                                 <div>
+                                    <h5 className='font-medium underline'>{element.quantity}</h5>
+                                </div>
+                                <div>
                                     <h5>{element.year}</h5>
                                 </div>
-                                <div className='flex gap-3'>
-                                    <Link to={`/book/edit/${element.id}`} className='flex items-center px-3 py-2 bg-green-50 text-green-800 rounded-lg'>
+                                <div className='flex gap-3 items-center'>
+                                    <Link to={`/book/edit/${element.id}`} className='px-3 py-2 bg-green-50 text-green-800 rounded-lg'>
                                         <BiSolidEdit />
                                     </Link>
-                                    <button className='flex items-center px-3 py-2 bg-red-50 text-red-500 rounded-lg' onClick={() => handleDelete(element.id)}>
+                                    <button className='px-3 py-2 bg-red-50 text-red-500 rounded-lg' onClick={() => handleDelete(element.id)}>
                                         <BsTrash2Fill />
                                     </button>
                                 </div>

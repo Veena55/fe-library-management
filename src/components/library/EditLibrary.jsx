@@ -18,20 +18,6 @@ const EditLibrary = () => {
 
     const handleChangeData = (e) => {
         const { name, value } = e.target;
-        if (name === 'bookId') {
-            try {
-                const obj = JSON.parse(value);
-                if (obj.quantity === 0) {
-                    console.log("Not Allowed!!");
-                    toast.error("This book is not available!!");
-                    return;
-                }
-            } catch (error) {
-                console.error("Error parsing JSON:", error);
-                toast.error("Invalid book data");
-                return;
-            }
-        }
         setData((prevData) => ({ ...prevData, [name]: value }));
     };
 
@@ -57,9 +43,9 @@ const EditLibrary = () => {
             setData({
                 studentId: data.studentId || "",
                 bookId: data.bookId || "",
-                startdate: new Date(data.startdate).toISOString().split('T')[0] || "",
-                enddate: new Date(data.enddate).toISOString().split('T')[0] || "",
-                returndate: new Date(data.returndate).toISOString().split('T')[0] || "",
+                startdate: data.startdate && new Date(data.startdate).toISOString().split('T')[0],
+                enddate: data.enddate && new Date(data.enddate).toISOString().split('T')[0],
+                returndate: data.returndate && new Date(data.returndate).toISOString().split('T')[0],
             });
         },
         onError: (err) => {
@@ -165,7 +151,7 @@ const EditLibrary = () => {
                                         >
                                             <option value="" disabled>-- Select --</option>
                                             {books.map((element) => (
-                                                <option key={element.id} value={JSON.stringify({ id: element.id, quantity: element.quantity })}>
+                                                <option key={element.id} value={element.ids}>
                                                     {element.name} - {element.quantity ? `(${element.quantity})` : "Not Available"}
                                                 </option>
                                             ))}

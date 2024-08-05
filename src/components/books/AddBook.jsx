@@ -9,7 +9,8 @@ const AddBook = () => {
     const [data, setData] = useState({
         name: '',
         author: '',
-        publication: '',
+        publications: '',
+        quantity: '',
         year: ''
     });
     const navigate = useNavigate();
@@ -92,7 +93,7 @@ const AddBook = () => {
                                     <div className="mt-2">
                                         <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
                                             <input
-                                                name="publication"
+                                                name="publications"
                                                 type="text"
                                                 placeholder="Enter Publication"
                                                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -102,7 +103,24 @@ const AddBook = () => {
                                     </div>
                                 </div>
                             </div>
-
+                            <div className="col-span-full">
+                                <div className="sm:col-span-4">
+                                    <label htmlFor="class" className="block text-sm font-medium leading-6 text-gray-900">
+                                        Quantity
+                                    </label>
+                                    <div className="mt-2">
+                                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                                            <input
+                                                name="quantity"
+                                                type="number"
+                                                placeholder="Enter No. Of Books"
+                                                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                                onChange={handleChangeData}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div className="col-span-full">
                                 <div className="sm:col-span-4">
                                     <label htmlFor="class" className="block text-sm font-medium leading-6 text-gray-900">

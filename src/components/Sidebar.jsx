@@ -1,4 +1,3 @@
-import { BookOpenIcon } from '@heroicons/react/20/solid'
 import React, { useState } from 'react'
 import { BiBookContent, BiBookOpen } from 'react-icons/bi'
 import { FaBarsStaggered } from 'react-icons/fa6'
@@ -9,9 +8,6 @@ import { Link } from 'react-router-dom'
 const Sidebar = () => {
     const menu = (window.location.pathname).split('/')[1];
     const [active, setActive] = useState(menu);
-
-
-
     return (
         <div className='w-full h-screen bg-white p-5' id='sidebar'>
             <div className='p-5 flex justify-between items-center text-indigo-600 relative'>

@@ -93,9 +93,9 @@ const LibraryList = () => {
                     <p className='text-center text-red-500 py-5'>No Records Found</p>
                 ) : (
                     library.map((element, index) => (
-                        <div className='grid grid-cols-7 p-5' key={element.id}>
+                        <div className='grid grid-cols-7 p-5 hover:bg-gray-100' key={element.id}>
                             <div><h5>{index + 1}</h5></div>
-                            <div><h5>{element.student ? element.student.name : ''}</h5></div>
+                            <div><h5 className='capitalize'>{element.student ? element.student.name : ''}</h5></div>
                             <div><h5>{element.book.name}</h5></div>
                             <div><h5>{new Date(element.startdate).toISOString().split('T')[0]}</h5></div>
                             <div><h5>{new Date(element.enddate).toISOString().split('T')[0]}</h5></div>
@@ -108,11 +108,11 @@ const LibraryList = () => {
                                     )}
                                 </h5>
                             </div>
-                            <div className='flex gap-3'>
-                                <Link to={`/library/edit/${element.id}`} className='flex items-center px-3 py-2 bg-green-50 text-green-800 rounded-lg'>
+                            <div className='flex gap-3 items-center'>
+                                <Link to={`/library/edit/${element.id}`} className='px-3 py-2 bg-green-50 text-green-800 rounded-lg'>
                                     <BiSolidEdit />
                                 </Link>
-                                <button className='flex items-center px-3 py-2 bg-red-50 text-red-500 rounded-lg' onClick={() => handleDelete(element.id)}>
+                                <button className='px-3 py-2 bg-red-50 text-red-500 rounded-lg' onClick={() => handleDelete(element.id)}>
                                     <BsTrash2Fill />
                                 </button>
                             </div>
