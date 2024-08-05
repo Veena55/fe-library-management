@@ -89,14 +89,14 @@ const LibraryList = () => {
                     </div>
                 ) : isError ? (
                     <p className='text-center text-red-500 py-5'>Error loading records</p>
-                ) : !library?.length ? (
+                ) : library?.length == 0 ? (
                     <p className='text-center text-red-500 py-5'>No Records Found</p>
                 ) : (
                     library.map((element, index) => (
                         <div className='grid grid-cols-7 p-5 hover:bg-gray-100' key={element.id}>
                             <div><h5>{index + 1}</h5></div>
                             <div><h5 className='capitalize'>{element.student ? element.student.name : ''}</h5></div>
-                            <div><h5>{element.book.name}</h5></div>
+                            <div><h5>{element.book ? element.book.name : ''}</h5></div>
                             <div><h5>{new Date(element.startdate).toISOString().split('T')[0]}</h5></div>
                             <div><h5>{new Date(element.enddate).toISOString().split('T')[0]}</h5></div>
                             <div>

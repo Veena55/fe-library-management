@@ -92,7 +92,7 @@ const StudentList = () => {
                 </div>
                 <hr className='border-t-[#5058b2] mx-2' />
                 {/* Values */}
-                {isLoading ? <div className='flex justify-center py-5 text-indigo-600'><BiLoaderCircle className='rotate' size={30} /> </div> : !students ? <p className='text-center text-red-500 py-5'>No Records Found</p> :
+                {isLoading ? <div className='flex justify-center py-5 text-indigo-600'><BiLoaderCircle className='rotate' size={30} /> </div> : students.length == 0 ? <p className='text-center text-red-500 py-5'>No Records Found</p> :
                     students.map((element, index) => {
                         return (
                             <div className='grid grid-cols-6 hover:bg-gray-100 p-5' key={index}>

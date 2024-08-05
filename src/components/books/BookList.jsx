@@ -98,7 +98,7 @@ const BookList = () => {
                     <div className='flex justify-center py-5 text-indigo-600'>
                         <BiLoaderCircle className='rotate' size={30} />
                     </div>
-                    : !books ?
+                    : books.length == 0 ?
                         <p className='text-center text-red-500 py-5'>No Records Found</p>
                         : books.map((element, index) => (
                             <div className='grid grid-cols-7 hover:bg-gray-100 p-5' key={index}>
