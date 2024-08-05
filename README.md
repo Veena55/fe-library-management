@@ -1,8 +1,36 @@
-# React + Vite
+# LIBRARY MANAGEMENT SYSTEM
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### FRONTEND: -
+***Technologies***
+*HTML5, CSS3, JAVASCRIPT, REACT JS, TAILWIND CSS*
 
-Currently, two official plugins are available:
+**Features**
+*Add , update, read & delete Students
+Add , update, read & delete Book
+Add , update, read & delete Library Record*
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+***Methods/Implementations***
+*React Query used for axios calls (useQuery to fetch data, useMutation to update, delete  & add data)
+Toast notifications (to display success or error)*
+
+**BACKEND**:-
+***Technologies***
+*EXPRESS, SEQUELIZE-CLI, SEQUELIZE*
+
+***Features***
+*Created the Models. (students, books, library)
+Created the Controllers for - students, books, library
+Maintained separate routes for all.
+Class Based Architecture
+Methods/Implementations
+Global error handing for all.
+Multer package used for video/image upload
+Validation on fields of database tables – it will helps to handle and display the errors on client side.
+Relationship built between Library & student, books.*
+
+**DATABASE :-**
+***MYSQL***
+
+
+
+
